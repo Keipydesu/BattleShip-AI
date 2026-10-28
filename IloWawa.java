@@ -16,8 +16,15 @@ public class IloWawa extends Player
     private Offense offense;
     private Defense defense;
 
+    private final File stateFile;
+
     public IloWawa(String name) {
+        this(name, new File(name + ".txt"));
+    }
+
+    public IloWawa(String name, File stateFile) {
         super(name);
+        this.stateFile = stateFile;
         populateShips();
     }
 
@@ -581,7 +588,7 @@ public class IloWawa extends Player
      * Saves the player's persistent state to a file.
      */
     private void save() {
-        File file = new File(this.getName() + ".txt");
+        File file = stateFile;
 
         try (FileWriter writer = new FileWriter(file)) {
             writer.write(stringify());
@@ -645,7 +652,7 @@ public class IloWawa extends Player
      * {@link Defense} classes for the current instance.
      */
     private void load() {
-        File file = new File(this.getName() + ".txt");
+        File file = stateFile;
 
         if (!file.exists()) {
             this.opponentName = Double.toString(Math.random());

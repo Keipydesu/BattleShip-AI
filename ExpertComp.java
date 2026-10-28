@@ -17,9 +17,15 @@ public class ExpertComp extends Player
 
     private HitsMap hitsMap;
 
-    public ExpertComp(String name)
-    {
+    private final File stateFile;
+
+    public ExpertComp(String name) {
+        this(name, new File(name + ".txt"));
+    }
+
+    public ExpertComp(String name, File stateFile) {
         super(name);
+        this.stateFile = stateFile;
         populateShips();
     }
 
@@ -1089,7 +1095,7 @@ public class ExpertComp extends Player
     }
 
     private void save() {
-        File file = new File(this.getName() + ".txt");
+        File file = stateFile;
 
         try (FileWriter writer = new FileWriter(file)) {
             writer.write(stringMaker());
@@ -1100,7 +1106,7 @@ public class ExpertComp extends Player
 
     private void load()
     {
-        File file = new File(this.getName() + ".txt");
+        File file = stateFile;
 
         if(!file.exists())
         {
